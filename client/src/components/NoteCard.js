@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
 function NoteCard({ note }) {
   const handleDelete = () => {
     fetch(`http://localhost:5000/api/notes/${note.id}`, {
-      method: 'DELETE',
+      method: "DELETE",
     }).then(() => {
       window.location.reload();
     });
