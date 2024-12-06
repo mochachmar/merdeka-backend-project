@@ -27,33 +27,33 @@ function App() {
   return (
     <div className="App">
       <header>
-        <h1>My Notes</h1>
-        <input type="text" placeholder="Search notes" onChange={(e) => {}} />
+        <h1>Catatan Saya</h1>
+        <input type="text" placeholder="Cari Catatan" onChange={(e) => {}} />
       </header>
 
       <section>
-        <h2>Create New Note</h2>
+        <h2>Buat Catatan Baru</h2>
         <input
           type="text"
-          placeholder="Enter note title"
+          placeholder="Masukkan judul catatan"
           value={newNote.title}
           onChange={(e) => setNewNote({ ...newNote, title: e.target.value })}
         />
         <textarea
-          placeholder="Enter note content"
+          placeholder="Masukkan konten catatan"
           value={newNote.note}
           onChange={(e) => setNewNote({ ...newNote, note: e.target.value })}
         />
         <div className="create-note-btn-container">
-          <button onClick={handleCreateNote}>Create Note</button>
+          <button onClick={handleCreateNote}>Buat Catatan</button>
         </div>
       </section>
 
       <section>
-        <h2>Active Notes</h2>
+        <h2>Catatan Yang Ada</h2>
         {notes.length === 0 ? (
           <div className="empty-state">
-            No notes yet! Create your first note.
+            Tidak ada catatan! Ayo buat catatan pertama mu!
           </div>
         ) : (
           <div className="note-container">
