@@ -69,7 +69,9 @@ function App() {
   return (
     <div className="App">
       <header>
-        <h1>Notes</h1>
+        <h1>
+          Notes <br /> Created by Sahabat Tani Group
+        </h1>
         <input
           type="text"
           className="search-input"

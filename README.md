@@ -1,70 +1,117 @@
-# Getting Started with Create React App
+# Notes App by Sahabat Tani Group
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A simple React-based note-taking application that allows users to create, edit, and search for notes. The app interacts with a RESTful API to store and retrieve notes.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- Create a new note with a title and content.
+- Edit an existing note.
+- Search notes by title or content.
+- Character limits for title and content to ensure concise notes.
 
-### `npm start`
+## Technologies Used
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Frontend:** React, CSS
+- **Backend:** RESTful API (assumed to be running at `http://localhost:5000/api/notes`)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## Installation
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Prerequisites
 
-### `npm run build`
+Ensure you have the following installed:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- [Node.js](https://nodejs.org/)
+- [npm](https://www.npmjs.com/)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Steps
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Clone this repository:
 
-### `npm run eject`
+   ```bash
+   git clone https://github.com/your-username/notes-app.git
+   cd notes-app
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. Install dependencies:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   ```bash
+   npm install -> client
+   npm install -> server
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+3. Start the React app:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   ```bash
+   npm start -> client
+   node index.js -> server
+   ```
 
-## Learn More
+4. Make sure the backend server is running at `http://localhost:5000`.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## API Endpoints
 
-### Code Splitting
+Ensure your backend server supports the following API endpoints:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+1. **Get all notes**
 
-### Analyzing the Bundle Size
+   - URL: `GET /api/notes`
+   - Response: Returns an array of note objects.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+   ```json
+   [
+     {
+       "id": 1,
+       "title": "Sample Note",
+       "note": "This is a sample note."
+     }
+   ]
+   ```
 
-### Making a Progressive Web App
+2. **Create a new note**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+   - URL: `POST /api/notes`
+   - Body: JSON object with `title` and `note`.
 
-### Advanced Configuration
+   ```json
+   {
+     "title": "New Note",
+     "note": "Note content here."
+   }
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+   - Response: Created note object.
 
-### Deployment
+3. **Update a note**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+   - URL: `PUT /api/notes/:id`
+   - Body: JSON object with updated `title` and/or `note`.
+   - Response: Updated note object.
 
-### `npm run build` fails to minify
+4. **Search notes**
+   - URL: `GET /api/notes/search?query=<search-query>`
+   - Response: Array of note objects matching the search query.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+
+## Usage
+
+1. **Create a Note**
+
+   - Enter a title and content in the form at the top.
+   - Click the "Buat" button to save the note.
+
+2. **Search Notes**
+
+   - Enter a search term in the search input field at the top.
+   - The displayed notes will update based on the query.
+
+3. **Edit a Note**
+   - Click the edit button on a note card.
+   - Update the note details in the edit modal.
+   - Click "Save" to apply changes.
+
+---
