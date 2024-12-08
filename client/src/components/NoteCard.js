@@ -1,22 +1,36 @@
-import React from 'react';
+import React from "react";
 
-function NoteCard({ note }) {
+function NoteCard({ note, onEdit, onArchive }) {
   const handleDelete = () => {
     fetch(`http://localhost:5000/api/notes/${note.id}`, {
-      method: 'DELETE',
+      method: "DELETE",
     }).then(() => {
       window.location.reload();
     });
   };
 
+  // Format datetime
+  const formattedDate = new Date(note.datetime).toLocaleString("id-ID", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+
   return (
     <div className="note-card">
       <h3>{note.title}</h3>
+      <small>{formattedDate}</small>
       <p>{note.note}</p>
-      <div className="button-group">
-        <button className="archive-btn">Archive</button>
+      <div className="actions">
         <button className="delete-btn" onClick={handleDelete}>
-          Delete
+          Hapus
+        </button>
+        <button className="edit-btn" onClick={onEdit}>
+          Ubah
+        </button>
+        <button className="archive-btn" >
+          Arsipkan
         </button>
       </div>
     </div>
