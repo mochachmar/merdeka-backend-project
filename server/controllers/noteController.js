@@ -57,6 +57,14 @@ exports.updateNote = async (req, res) => {
     if (result.affectedRows === 0) {
       return res.status(404).json({ success: false, message: 'Note not found' });
     }
+
+    if (!title || !note) {
+      return res.status(400).json({
+        success: false,
+        message: 'Title and note are required and cannot be empty.',
+      });
+    }
+
     res.status(200).json({ success: true, message: 'Note updated successfully' });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });

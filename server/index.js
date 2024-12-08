@@ -7,22 +7,25 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Endpoint untuk mendapatkan semua notes
-app.get('/api/notes', (req, res) => {
-  db.query('SELECT * FROM notes ORDER BY datetime DESC', (err, results) => {
+// Endpoint notes
+app.get('/api/notes/search', (req, res) => {
+  const { query } = req.query;
+  if (!query) {
+    return res.status(400).json({ message: 'Query parameter is required' });
+  }
+
+  db.query('SELECT * FROM notes WHERE title LIKE ? OR note LIKE ? ORDER BY datetime DESC', [`%${query}%`, `%${query}%`], (err, results) => {
     if (err) {
-      return res.status(500).json({ message: 'Error fetching notes', error: err });
+      return res.status(500).json({ message: 'Error searching notes', error: err });
     }
     res.json(results);
   });
 });
 
-// Endpoint untuk menambahkan note
 app.post('/api/notes', (req, res) => {
   const { title, note } = req.body;
   const datetime = new Date();
-  const query = 'INSERT INTO notes (title, datetime, note) VALUES (?, ?, ?)';
-  db.query(query, [title, datetime, note], (err, results) => {
+  db.query('INSERT INTO notes (title, datetime, note) VALUES (?, ?, ?)', [title, datetime, note], (err, results) => {
     if (err) {
       return res.status(500).json({ message: 'Error creating note', error: err });
     }
@@ -30,12 +33,12 @@ app.post('/api/notes', (req, res) => {
   });
 });
 
-// Endpoint untuk mengupdate note
 app.put('/api/notes/:id', (req, res) => {
-  const { title, note } = req.body;
-  const datetime = new Date();
-  const query = 'UPDATE notes SET title = ?, datetime = ?, note = ? WHERE id = ?';
-  db.query(query, [title, datetime, note, req.params.id], (err) => {
+  const { title, note, datetime } = req.body;
+  if (!title || !note) {
+    return res.status(400).json({ message: 'Judul dan catatan tidak boleh kosong!' });
+  }
+  db.query('UPDATE notes SET title = ?, datetime = ?, note = ? WHERE id = ?', [title, datetime, note, req.params.id], (err) => {
     if (err) {
       return res.status(500).json({ message: 'Error updating note', error: err });
     }
@@ -43,10 +46,8 @@ app.put('/api/notes/:id', (req, res) => {
   });
 });
 
-// Endpoint untuk menghapus note
 app.delete('/api/notes/:id', (req, res) => {
-  const query = 'DELETE FROM notes WHERE id = ?';
-  db.query(query, [req.params.id], (err) => {
+  db.query('DELETE FROM notes WHERE id = ?', [req.params.id], (err) => {
     if (err) {
       return res.status(500).json({ message: 'Error deleting note', error: err });
     }

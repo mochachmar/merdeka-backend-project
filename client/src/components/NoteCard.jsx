@@ -1,6 +1,6 @@
 import React from 'react';
 
-function NoteCard({ note, onEdit, onArchive }) {
+function NoteCard({ note, onEdit }) {
   const handleDelete = () => {
     fetch(`http://localhost:5000/api/notes/${note.id}`, {
       method: 'DELETE',
@@ -9,12 +9,13 @@ function NoteCard({ note, onEdit, onArchive }) {
     });
   };
 
-  // Format datetime
   const formattedDate = new Date(note.datetime).toLocaleString('id-ID', {
     weekday: 'long',
     day: 'numeric',
     month: 'long',
     year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
   });
 
   return (
@@ -28,9 +29,6 @@ function NoteCard({ note, onEdit, onArchive }) {
         </button>
         <button className="edit-btn" onClick={onEdit}>
           Ubah
-        </button>
-        <button className="archive-btn" onClick={onArchive}>
-          Arsipkan
         </button>
       </div>
     </div>
