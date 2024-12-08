@@ -1,20 +1,20 @@
-import React from "react";
+import React from 'react';
 
 function NoteCard({ note, onEdit, onArchive }) {
   const handleDelete = () => {
     fetch(`http://localhost:5000/api/notes/${note.id}`, {
-      method: "DELETE",
+      method: 'DELETE',
     }).then(() => {
       window.location.reload();
     });
   };
 
   // Format datetime
-  const formattedDate = new Date(note.datetime).toLocaleString("id-ID", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
+  const formattedDate = new Date(note.datetime).toLocaleString('id-ID', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
   });
 
   return (
@@ -29,7 +29,7 @@ function NoteCard({ note, onEdit, onArchive }) {
         <button className="edit-btn" onClick={onEdit}>
           Ubah
         </button>
-        <button className="archive-btn" >
+        <button className="archive-btn" onClick={onArchive}>
           Arsipkan
         </button>
       </div>
