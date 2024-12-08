@@ -1,37 +1,38 @@
-# Notes App by Sahabat Tani Group
+# Aplikasi Catatan (Notes App) oleh Sahabat Tani Group
 
-A simple React-based note-taking application that allows users to create, edit, search, and delete notes. The app interacts with a RESTful API to store and retrieve notes.
+Aplikasi pembuatan catatan sederhana berbasis React yang memungkinkan pengguna untuk membuat, mengedit, mencari, dan menghapus catatan. Aplikasi ini berinteraksi dengan API RESTful untuk menyimpan dan mengambil catatan.
 
-## Features
+## Fitur
 
-- Create a new note with a title, date, and content.
-- View all notes.
-- Search for specific notes by title or content.
-- Edit an existing note (title, date, and content).
-- Delete notes.
-- Character limits for title and content to ensure concise notes.
+- Membuat catatan baru dengan judul, tanggal (sesuai tanggal dan waktu pembuatan catatan), dan isi catatan.
+- Melihat semua catatan.
+- Mencari catatan berdasarkan judul atau isi catatan.
+- Mengedit catatan yang ada (judul, tanggal, dan isi catatan).
+- Menghapus catatan.
+- Batasan karakter untuk judul dan isi catatan agar catatan lebih ringkas.
+- Memberikan validasi untuk inputan judul dan isi catatan
 
-## Technologies Used
+## Teknologi yang Digunakan
 
 - **Frontend:** React, CSS
-- **Backend:** RESTful API (assumed to be running at `http://localhost:5000/api/notes`)
+- **Backend:** API RESTful (diasumsikan berjalan di `http://localhost:5000/api/notes`)
 - **Database:** MySQL
 
 ---
 
-## Installation
+## Instalasi
 
-### Prerequisites
+### Prasyarat
 
-Ensure you have the following installed:
+Pastikan Anda memiliki perangkat lunak berikut terinstal:
 
 - [Node.js](https://nodejs.org/)
 - [npm](https://www.npmjs.com/)
 - [MySQL](https://www.mysql.com/)
 
-### Steps
+### Langkah-langkah
 
-1. Clone this repository:
+1. Clone repositori ini:
 
    ```bash
    git clone https://github.com/mochachmar/merdeka-backend-project.git
@@ -52,149 +53,150 @@ Ensure you have the following installed:
    );
    ```
 
-3. Install dependencies for both the client and server:
+3. Instal dependensi untuk client dan server:
 
-   ```bash
+   ```cmd
    cd client
    npm install
    cd ../server
    npm install
    ```
 
-4. Start the application:
+4. Mulai aplikasi:
 
    - **Frontend:**
 
-     ```bash
+     ```cmd
      cd client
      npm start
      ```
 
    - **Backend:**
-     ```bash
+     ```cmd
      cd server
      node index.js
      ```
 
-5. Make sure the backend server is running at `http://localhost:5000`.
+5. Pastikan server backend berjalan di `http://localhost:5000`.
 
 ---
 
 ## API Endpoints
 
-Ensure your backend server supports the following API endpoints:
+Pastikan server backend Anda mendukung endpoint API berikut:
 
-1. **Get all notes**
+1. **Mengambil semua catatan**
 
    - URL: `GET /api/notes`
-   - Response: Returns an array of note objects.
+   - Respons: Mengembalikan array objek catatan.
 
    ```json
    [
      {
        "id": 1,
-       "title": "Sample Note",
+       "title": "Catatan Contoh",
        "datetime": "2024-12-01T14:00:00Z",
-       "note": "This is a sample note."
+       "note": "Ini adalah catatan contoh."
      }
    ]
    ```
 
-2. **Create a new note**
+2. **Membuat catatan baru**
 
    - URL: `POST /api/notes`
-   - Body: JSON object with `title`, `datetime`, and `note`.
+   - Body: Objek JSON dengan `title`, `datetime`, dan `note`.
 
    ```json
    {
-     "title": "New Note",
+     "title": "Catatan Baru",
      "datetime": "2024-12-08T10:00:00Z",
-     "note": "Note content here."
+     "note": "Konten catatan di sini."
    }
    ```
 
-   - Response: Created note object.
+   - Respons: Objek catatan yang dibuat.
 
-3. **Get a single note**
+3. **Mengambil satu catatan**
 
    - URL: `GET /api/notes/:id`
-   - Response: A single note object.
+   - Respons: Objek catatan tunggal.
 
    ```json
    {
      "id": 1,
-     "title": "Sample Note",
+     "title": "Catatan Contoh",
      "datetime": "2024-12-01T14:00:00Z",
-     "note": "This is a sample note."
+     "note": "Ini adalah catatan contoh."
    }
    ```
 
-4. **Search notes**
+4. **Mencari catatan**
 
    - URL: `GET /api/notes/search?query=<search-query>`
-   - Response: Array of note objects matching the search query.
+   - Respons: Array objek catatan yang sesuai dengan query pencarian.
 
    ```json
    [
      {
        "id": 1,
-       "title": "Sample Note",
+       "title": "Catatan Contoh",
        "datetime": "2024-12-01T14:00:00Z",
-       "note": "This is a sample note."
+       "note": "Ini adalah catatan contoh."
      }
    ]
    ```
 
-5. **Update a note**
+5. **Memperbarui catatan**
 
    - URL: `PUT /api/notes/:id`
-   - Body: JSON object with updated `title`, `datetime`, and/or `note`.
+   - Body: Objek JSON dengan pembaruan `title`, `datetime`, dan/atau `note`.
 
    ```json
    {
-     "title": "Updated Note",
+     "title": "Catatan Diperbarui",
      "datetime": "2024-12-08T12:00:00Z",
-     "note": "Updated note content."
+     "note": "Konten catatan yang diperbarui."
    }
    ```
 
-   - Response: Updated note object.
+   - Respons: Objek catatan yang diperbarui.
 
-6. **Delete a note**
+6. **Menghapus catatan**
    - URL: `DELETE /api/notes/:id`
-   - Response: Success message.
+   - Respons: Pesan keberhasilan.
    ```json
    {
-     "message": "Note deleted successfully."
+     "message": "Catatan berhasil dihapus."
    }
    ```
 
 ---
 
-## Usage
+## Penggunaan
 
-1. **Create a Note**
+1. **Membuat Catatan Baru**
 
-   - Enter a title, date, and content in the form at the top.
-   - Click the "Buat" button to save the note.
+   - Masukkan judul, tanggal, dan isi catatan di form yang ada di bagian atas.
+   - Klik tombol "Buat" untuk menyimpan catatan.
 
-2. **View All Notes**
+2. **Menampilkan Semua Catatan**
 
-   - All notes will be displayed in the main section of the app.
+   - Semua catatan akan ditampilkan di bagian utama aplikasi.
 
-3. **Search Notes**
+3. **Menampilkan Salah Satu Catatan Melalui Fitur Pencarian Catatan**
 
-   - Enter a search term in the search input field at the top.
-   - The displayed notes will update based on the query.
+   - Masukkan kata kunci pencarian di kolom input pencarian di bagian atas.
+   - Catatan yang ditampilkan akan diperbarui berdasarkan query.
+   - Hasilnya akan menampilkan salah satu card catatan yang sesuai dengan pencarian
 
-4. **Edit a Note**
+4. **Mengubah Catatan (judul, tanggal, dan catatan)**
 
-   - Click the edit button on a note card.
-   - Update the note details (title, date, and content) in the edit modal.
-   - Click "Save" to apply changes.
+   - Klik tombol edit pada kartu catatan.
+   - Perbarui detail catatan (judul, tanggal, dan isi catatan) di edit.
+   - Klik "Simpan" untuk menerapkan perubahan.
 
-5. **Delete a Note**
-   - Click the delete button on a note card.
-   - Confirm the deletion in the prompt.
+5. **Menghapus Catatan**
+   - Klik tombol hapus pada kartu catatan.
+   - Konfirmasi penghapusan di prompt.
 
 ---
