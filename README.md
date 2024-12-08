@@ -1,18 +1,21 @@
 # Notes App by Sahabat Tani Group
 
-A simple React-based note-taking application that allows users to create, edit, and search for notes. The app interacts with a RESTful API to store and retrieve notes.
+A simple React-based note-taking application that allows users to create, edit, search, and delete notes. The app interacts with a RESTful API to store and retrieve notes.
 
 ## Features
 
-- Create a new note with a title and content.
-- Edit an existing note.
-- Search notes by title or content.
+- Create a new note with a title, date, and content.
+- View all notes.
+- Search for specific notes by title or content.
+- Edit an existing note (title, date, and content).
+- Delete notes.
 - Character limits for title and content to ensure concise notes.
 
 ## Technologies Used
 
 - **Frontend:** React, CSS
 - **Backend:** RESTful API (assumed to be running at `http://localhost:5000/api/notes`)
+- **Database:** MySQL
 
 ---
 
@@ -24,31 +27,56 @@ Ensure you have the following installed:
 
 - [Node.js](https://nodejs.org/)
 - [npm](https://www.npmjs.com/)
+- [MySQL](https://www.mysql.com/)
 
 ### Steps
 
 1. Clone this repository:
 
    ```bash
-   git clone https://github.com/your-username/notes-app.git
-   cd notes-app
+   git clone https://github.com/mochachmar/merdeka-backend-project.git
+   cd merdeka-backend-project
    ```
 
-2. Install dependencies:
+2. Setup Database (MySQL):
+
+   ```sql
+   CREATE DATABASE notes_db;
+   USE notes_db;
+
+   CREATE TABLE notes (
+       id BIGINT AUTO_INCREMENT PRIMARY KEY,
+       title TEXT NOT NULL,
+       datetime DATETIME NOT NULL,
+       note LONGTEXT NOT NULL
+   );
+   ```
+
+3. Install dependencies for both the client and server:
 
    ```bash
-   npm install -> client
-   npm install -> server
+   cd client
+   npm install
+   cd ../server
+   npm install
    ```
 
-3. Start the React app:
+4. Start the application:
 
-   ```bash
-   npm start -> client
-   node index.js -> server
-   ```
+   - **Frontend:**
 
-4. Make sure the backend server is running at `http://localhost:5000`.
+     ```bash
+     cd client
+     npm start
+     ```
+
+   - **Backend:**
+     ```bash
+     cd server
+     node index.js
+     ```
+
+5. Make sure the backend server is running at `http://localhost:5000`.
 
 ---
 
@@ -66,6 +94,7 @@ Ensure your backend server supports the following API endpoints:
      {
        "id": 1,
        "title": "Sample Note",
+       "datetime": "2024-12-01T14:00:00Z",
        "note": "This is a sample note."
      }
    ]
@@ -74,26 +103,71 @@ Ensure your backend server supports the following API endpoints:
 2. **Create a new note**
 
    - URL: `POST /api/notes`
-   - Body: JSON object with `title` and `note`.
+   - Body: JSON object with `title`, `datetime`, and `note`.
 
    ```json
    {
      "title": "New Note",
+     "datetime": "2024-12-08T10:00:00Z",
      "note": "Note content here."
    }
    ```
 
    - Response: Created note object.
 
-3. **Update a note**
+3. **Get a single note**
 
-   - URL: `PUT /api/notes/:id`
-   - Body: JSON object with updated `title` and/or `note`.
-   - Response: Updated note object.
+   - URL: `GET /api/notes/:id`
+   - Response: A single note object.
+
+   ```json
+   {
+     "id": 1,
+     "title": "Sample Note",
+     "datetime": "2024-12-01T14:00:00Z",
+     "note": "This is a sample note."
+   }
+   ```
 
 4. **Search notes**
+
    - URL: `GET /api/notes/search?query=<search-query>`
    - Response: Array of note objects matching the search query.
+
+   ```json
+   [
+     {
+       "id": 1,
+       "title": "Sample Note",
+       "datetime": "2024-12-01T14:00:00Z",
+       "note": "This is a sample note."
+     }
+   ]
+   ```
+
+5. **Update a note**
+
+   - URL: `PUT /api/notes/:id`
+   - Body: JSON object with updated `title`, `datetime`, and/or `note`.
+
+   ```json
+   {
+     "title": "Updated Note",
+     "datetime": "2024-12-08T12:00:00Z",
+     "note": "Updated note content."
+   }
+   ```
+
+   - Response: Updated note object.
+
+6. **Delete a note**
+   - URL: `DELETE /api/notes/:id`
+   - Response: Success message.
+   ```json
+   {
+     "message": "Note deleted successfully."
+   }
+   ```
 
 ---
 
@@ -101,17 +175,26 @@ Ensure your backend server supports the following API endpoints:
 
 1. **Create a Note**
 
-   - Enter a title and content in the form at the top.
+   - Enter a title, date, and content in the form at the top.
    - Click the "Buat" button to save the note.
 
-2. **Search Notes**
+2. **View All Notes**
+
+   - All notes will be displayed in the main section of the app.
+
+3. **Search Notes**
 
    - Enter a search term in the search input field at the top.
    - The displayed notes will update based on the query.
 
-3. **Edit a Note**
+4. **Edit a Note**
+
    - Click the edit button on a note card.
-   - Update the note details in the edit modal.
+   - Update the note details (title, date, and content) in the edit modal.
    - Click "Save" to apply changes.
+
+5. **Delete a Note**
+   - Click the delete button on a note card.
+   - Confirm the deletion in the prompt.
 
 ---
