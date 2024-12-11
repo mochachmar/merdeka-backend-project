@@ -22,6 +22,12 @@ function EditNote({ editNote, setEditNote, handleSaveEdit }) {
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   };
 
+  const handleDateChange = (e) => {
+    const selectedDate = new Date(e.target.value);
+    const formattedDate = selectedDate.toISOString().slice(0, 19).replace('T', ' ');
+    setEditNote({ ...editNote, datetime: formattedDate });
+  };
+
   return (
     <div className="modal">
       <div className="modal-content">
@@ -32,13 +38,7 @@ function EditNote({ editNote, setEditNote, handleSaveEdit }) {
         <label htmlFor="note-textarea">Isi Catatan</label>
         <textarea id="note-textarea" className="note-textarea" value={editNote.note} maxLength={500} onChange={(e) => setEditNote({ ...editNote, note: e.target.value })} />
         <label htmlFor="note-datetime">Tanggal</label>
-        <input
-          id="note-datetime"
-          type="datetime-local"
-          className="note-date"
-          value={formatDateTime(editNote.datetime)} // Format sesuai "datetime-local"
-          onChange={(e) => setEditNote({ ...editNote, datetime: new Date(e.target.value) })}
-        />
+        <input id="note-datetime" type="datetime-local" className="note-date" value={formatDateTime(editNote.datetime)} onChange={handleDateChange} />
         <div className="modal-actions">
           <button className="save-btn" onClick={validateAndSave}>
             Simpan

@@ -28,7 +28,7 @@ exports.createNote = async (req, res) => {
 // Mendapatkan semua note
 exports.getNotes = async (req, res) => {
   try {
-    const [notes] = await db.query('SELECT * FROM notes');
+    const [notes] = await db.query('SELECT * FROM notes ORDER BY datetime DESC');
     res.status(200).json({ success: true, data: notes });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -36,15 +36,17 @@ exports.getNotes = async (req, res) => {
 };
 
 // Mendapatkan note berdasarkan ID
-exports.getNoteById = async (req, res) => {
+exports.searchNotes = async (req, res) => {
   try {
-    const [notes] = await db.query('SELECT * FROM notes WHERE id = ?', [req.params.id]);
-    if (notes.length === 0) {
-      return res.status(404).json({ success: false, message: 'Note not found' });
+    const { query } = req.query;
+    if (!query) {
+      return res.status(400).json({ success: false, message: 'Query parameter is required' });
     }
-    res.status(200).json({ success: true, data: notes[0] });
+
+    const [results] = await db.query('SELECT * FROM notes WHERE title LIKE ? OR note LIKE ? ORDER BY datetime DESC', [`%${query}%`, `%${query}%`]);
+    res.status(200).json({ success: true, data: results });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    res.status(500).json({ success: false, message: 'Error searching notes', error: error.message });
   }
 };
 

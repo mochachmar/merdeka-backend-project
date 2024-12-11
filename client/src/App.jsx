@@ -68,11 +68,18 @@ function App() {
       body: JSON.stringify(editNote),
     })
       .then((response) => response.json())
-      .then(() => {
-        setNotes((prevNotes) => prevNotes.map((note) => (note.id === editNote.id ? { ...note, ...editNote } : note)));
+      .then((data) => {
+        if (data.message === 'Note updated successfully') {
+          setNotes((prevNotes) => prevNotes.map((note) => (note.id === editNote.id ? { ...note, ...editNote } : note)));
 
-        setFilteredNotes((prevNotes) => prevNotes.map((note) => (note.id === editNote.id ? { ...note, ...editNote } : note)));
-        setEditNote(null);
+          setFilteredNotes((prevNotes) => prevNotes.map((note) => (note.id === editNote.id ? { ...note, ...editNote } : note)));
+          setEditNote(null);
+        } else {
+          setErrorMessage(data.message || 'Gagal memperbarui catatan');
+        }
+      })
+      .catch((error) => {
+        setErrorMessage('Terjadi kesalahan saat memperbarui catatan');
       });
   };
 
