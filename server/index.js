@@ -47,11 +47,17 @@ app.put('/api/notes/:id', (req, res) => {
 });
 
 app.delete('/api/notes/:id', (req, res) => {
-  db.query('DELETE FROM notes WHERE id = ?', [req.params.id], (err) => {
+  const noteId = req.params.id;
+  const query = 'DELETE FROM notes WHERE id = ?';
+
+  db.query(query, [noteId], (err, result) => {
     if (err) {
-      return res.status(500).json({ message: 'Error deleting note', error: err });
+      return res.status(500).json({ message: 'Terjadi kesalahan pada server' });
     }
-    res.status(200).json({ message: 'Note deleted successfully' });
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Catatan tidak ditemukan' });
+    }
+    res.status(200).json({ message: 'Catatan berhasil dihapus' });
   });
 });
 

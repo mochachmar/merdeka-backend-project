@@ -15,8 +15,8 @@ function App() {
     fetch('http://localhost:5000/api/notes')
       .then((response) => response.json())
       .then((data) => {
-        setNotes(data);
-        setFilteredNotes(data); // Inisialisasi filteredNotes dengan semua catatan
+        setNotes(data.data); // Pastikan mengambil `data` dari respons API
+        setFilteredNotes(data.data);
       });
   }, []);
 
@@ -39,6 +39,26 @@ function App() {
       });
   };
 
+  const handleDeleteNote = (noteId) => {
+    if (window.confirm('Apakah Anda yakin ingin menghapus catatan ini?')) {
+      fetch(`http://localhost:5000/api/notes/${noteId}`, {
+        method: 'DELETE',
+      })
+        .then((response) => {
+          if (response.ok) {
+            // Menghapus catatan dari state setelah berhasil dihapus di server
+            setNotes(notes.filter((note) => note.id !== noteId));
+            setFilteredNotes(filteredNotes.filter((note) => note.id !== noteId));
+          } else {
+            throw new Error('Gagal menghapus catatan');
+          }
+        })
+        .catch((error) => {
+          setErrorMessage(error.message);
+        });
+    }
+  };
+
   const handleSaveEdit = () => {
     if (!editNote) return;
 
@@ -50,6 +70,7 @@ function App() {
       .then((response) => response.json())
       .then(() => {
         setNotes((prevNotes) => prevNotes.map((note) => (note.id === editNote.id ? { ...note, ...editNote } : note)));
+
         setFilteredNotes((prevNotes) => prevNotes.map((note) => (note.id === editNote.id ? { ...note, ...editNote } : note)));
         setEditNote(null);
       });
@@ -96,7 +117,7 @@ function App() {
         <h2>Catatan</h2>
         <div className="note-container">
           {filteredNotes.map((note) => (
-            <NoteCard key={note.id} note={note} onEdit={() => setEditNote(note)} />
+            <NoteCard key={note.id} note={note} onDelete={handleDeleteNote} onEdit={() => setEditNote(note)} />
           ))}
         </div>
       </div>
