@@ -8,6 +8,9 @@ const db = mysql.createConnection({
   database: process.env.DATABASE,
 });
 
+// Menggunakan promise wrapper
+const dbPromise = db.promise();
+
 db.connect((err) => {
   if (err) {
     console.error('Gagal terhubung ke database MYSQL, muncul error:', err.stack);
@@ -16,4 +19,4 @@ db.connect((err) => {
   console.log('Berhasil terhubung ke database MYSQL!');
 });
 
-module.exports = db;
+module.exports = dbPromise;

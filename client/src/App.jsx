@@ -98,7 +98,7 @@ function App() {
     <div className="App">
       <header>
         <h1>
-          Notes <br /> Created by Sahabat Tani Group
+          NotesKu <br /> Created by Sahabat Tani Group
         </h1>
         <input
           type="text"
